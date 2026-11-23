@@ -1,0 +1,29 @@
+# Build
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Fichiers locaux contenant des secrets (ne jamais versionner)
+.env
+.env.*
+!.env.example
+*.local.yml
+*.local.yaml
+*.local.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+*.code-workspace
+
+# Système
+.DS_Store
+Thumbs.db
+
+# Journaux
+*.log
+logs/
