@@ -26,8 +26,12 @@ BEGIN
             CHECK (email = lower(btrim(email)));
     END IF;
 
-    -- Le rôle est stocké par son libellé.
-    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'ck_users_role') THEN
+    -- Le rôle est stocké par son libellé. Hibernate génère déjà une contrainte
+    -- (users_role_check) à la création de la table : on n'en ajoute une que si
+    -- aucune vérification ne porte sur la colonne role.
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint
+                   WHERE conrelid = 'users'::regclass AND contype = 'c'
+                     AND pg_get_constraintdef(oid) LIKE '%role%') THEN
         ALTER TABLE users ADD CONSTRAINT ck_users_role CHECK (role IN ('USER', 'ADMIN'));
     END IF;
 
