@@ -1,0 +1,12 @@
+# Profil des tests d'intégration : base PostgreSQL jetable (Testcontainers), distincte de la
+# base de démonstration. La connexion et la clé JWT sont fournies par AbstractIntegrationTest.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
