@@ -1,3 +1,20 @@
+# Configuration commune. Aucun secret n'est écrit ici : les valeurs sensibles
+# proviennent exclusivement des variables d'environnement (voir .env.example).
 spring:
   application:
     name: tp-api-rest
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # Hors du profil tp, le schéma n'est jamais modifié automatiquement :
+      # Hibernate vérifie seulement qu'il correspond aux entités.
+      ddl-auto: validate
+
+app:
+  jwt:
+    secret-base64: ${JWT_SECRET_BASE64}
+    ttl-seconds: ${JWT_TTL_SECONDS:900}
