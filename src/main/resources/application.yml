@@ -7,6 +7,11 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    hikari:
+      data-source-properties:
+        # Le pilote n'ajoute pas le détail du serveur aux exceptions et aux journaux :
+        # « Failing row contains (...) » recopierait la ligne refusée, hachage compris.
+        logServerErrorDetail: false
   jpa:
     open-in-view: false
     hibernate:
