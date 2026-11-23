@@ -65,12 +65,12 @@ public class UserService {
     public UserResponse update(Long id, UpdateUserRequest request) {
         User user = getUser(id);
         // Le compte peut conserver son propre email ; celui d'un autre compte est refusé.
-        if (userRepository.existsByEmailAndIdNot(request.email(), id)) {
+        if (userRepository.existsByEmailAndIdNot(request.getEmail(), id)) {
             throw new EmailAlreadyUsedException();
         }
-        user.updateProfile(request.name(), request.email(), request.role());
+        user.updateProfile(request.getName(), request.getEmail(), request.getRole());
         if (request.hasPassword()) {
-            user.changePasswordHash(passwordEncoder.encode(request.password()));
+            user.changePasswordHash(passwordEncoder.encode(request.getPassword()));
         }
         return UserMapper.toResponse(saveAndFlush(user));
     }

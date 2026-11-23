@@ -197,13 +197,13 @@ class RequestValidationTest {
             assertThat(invalidFields(userWithPassword(null))).containsExactly("password");
             assertThat(invalidFields(new RegisterRequest("Awa Diop", "awa@exemple.test", null)))
                     .containsExactly("password");
-            assertThat(invalidFields(new UpdateUserRequest("Awa Diop", "awa@exemple.test", Role.USER, null)))
+            assertThat(invalidFields(UpdateUserRequest.of("Awa Diop", "awa@exemple.test", Role.USER, null)))
                     .isEmpty();
         }
 
         @Test
         void validatesPasswordWhenProvidedOnUpdate() {
-            assertThat(invalidFields(new UpdateUserRequest("Awa Diop", "awa@exemple.test", Role.USER, "court")))
+            assertThat(invalidFields(UpdateUserRequest.of("Awa Diop", "awa@exemple.test", Role.USER, "court")))
                     .containsExactly("password");
         }
     }
@@ -215,7 +215,7 @@ class RequestValidationTest {
         void requiresRoleOnAdministrativeCreationAndUpdate() {
             assertThat(invalidFields(new CreateUserRequest("Awa Diop", "awa@exemple.test", VALID_PASSWORD, null)))
                     .containsExactly("role");
-            assertThat(invalidFields(new UpdateUserRequest("Awa Diop", "awa@exemple.test", null, null)))
+            assertThat(invalidFields(UpdateUserRequest.of("Awa Diop", "awa@exemple.test", null, null)))
                     .containsExactly("role");
         }
 
@@ -223,7 +223,7 @@ class RequestValidationTest {
         void acceptsUserAndAdmin() {
             assertThat(invalidFields(new CreateUserRequest("Awa Diop", "awa@exemple.test", VALID_PASSWORD, Role.ADMIN)))
                     .isEmpty();
-            assertThat(invalidFields(new UpdateUserRequest("Awa Diop", "awa@exemple.test", Role.USER, null)))
+            assertThat(invalidFields(UpdateUserRequest.of("Awa Diop", "awa@exemple.test", Role.USER, null)))
                     .isEmpty();
         }
     }

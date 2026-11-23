@@ -81,7 +81,7 @@ class UserServiceTest {
         when(userRepository.findById(2L)).thenReturn(Optional.of(user));
         when(userRepository.saveAndFlush(user)).thenReturn(user);
 
-        userService.update(2L, new UpdateUserRequest("Awa Ndiaye", "awa@exemple.test", Role.ADMIN, null));
+        userService.update(2L, UpdateUserRequest.of("Awa Ndiaye", "awa@exemple.test", Role.ADMIN, null));
 
         assertThat(user.getPasswordHash()).isEqualTo(EXISTING_HASH);
         assertThat(user.getRole()).isEqualTo(Role.ADMIN);
@@ -95,7 +95,7 @@ class UserServiceTest {
         when(userRepository.saveAndFlush(user)).thenReturn(user);
         when(passwordEncoder.encode("Nouveau-mdp-1")).thenReturn("$2a$10$hachagenouveau");
 
-        userService.update(2L, new UpdateUserRequest("Awa", "awa@exemple.test", Role.USER, "Nouveau-mdp-1"));
+        userService.update(2L, UpdateUserRequest.of("Awa", "awa@exemple.test", Role.USER, "Nouveau-mdp-1"));
 
         assertThat(user.getPasswordHash()).isEqualTo("$2a$10$hachagenouveau");
     }
@@ -107,7 +107,7 @@ class UserServiceTest {
         when(userRepository.existsByEmailAndIdNot("autre@exemple.test", 2L)).thenReturn(true);
 
         assertThatThrownBy(() -> userService.update(2L,
-                new UpdateUserRequest("Awa", "autre@exemple.test", Role.USER, null)))
+                UpdateUserRequest.of("Awa", "autre@exemple.test", Role.USER, null)))
                 .isInstanceOf(EmailAlreadyUsedException.class);
         assertThat(user.getEmail()).isEqualTo("awa@exemple.test");
         verify(userRepository, never()).saveAndFlush(any());
@@ -117,7 +117,7 @@ class UserServiceTest {
     void updateOfMissingUserIsNotFound() {
         when(userRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> userService.update(99L, new UpdateUserRequest("Awa", "awa@exemple.test", Role.USER, null)))
+        assertThatThrownBy(() -> userService.update(99L, UpdateUserRequest.of("Awa", "awa@exemple.test", Role.USER, null)))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
