@@ -1,0 +1,23 @@
+# PostgreSQL local pour le TP (optionnel si PostgreSQL est déjà installé sur le poste).
+# Le mot de passe du compte d'administration « postgres » est lu depuis la variable
+# POSTGRES_ADMIN_PASSWORD (Docker Compose lit automatiquement le fichier .env).
+# Ce compte sert uniquement à exécuter database/01-create-role-and-database.sql.
+services:
+  postgres:
+    image: postgres:17
+    container_name: tp-rest-postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:?Definir POSTGRES_ADMIN_PASSWORD dans .env}
+    ports:
+      - "5432:5432"
+    volumes:
+      - tp-rest-pgdata:/var/lib/postgresql/data
+      - ./database:/scripts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  tp-rest-pgdata:
