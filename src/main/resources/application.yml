@@ -13,6 +13,11 @@ spring:
       # Hors du profil tp, le schéma n'est jamais modifié automatiquement :
       # Hibernate vérifie seulement qu'il correspond aux entités.
       ddl-auto: validate
+  jackson:
+    deserialization:
+      # JSON strict : une propriété inconnue (ex. role à l'inscription, id à la création)
+      # est refusée avec une erreur 400 au lieu d'être ignorée silencieusement.
+      fail-on-unknown-properties: true
 
 app:
   jwt:
