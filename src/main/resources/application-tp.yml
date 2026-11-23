@@ -6,3 +6,8 @@ spring:
       # jamais supprimer les données existantes : elles sont conservées entre
       # deux démarrages (contrairement à create et create-drop).
       ddl-auto: update
+    properties:
+      hibernate:
+        # Crée une contrainte d'unicité manquante sans supprimer celles qui existent.
+        schema_update:
+          unique_constraint_strategy: RECREATE_QUIETLY
