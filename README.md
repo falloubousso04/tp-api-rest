@@ -3,6 +3,8 @@
 API JSON de gestion des **produits** et des **utilisateurs**, persistée dans **PostgreSQL** et protégée par
 une authentification **JWT** (rôles `USER` et `ADMIN`). La démonstration se fait depuis **Swagger UI**.
 
+Le compte rendu du travail se trouve dans [docs/compte-rendu.md](docs/compte-rendu.md).
+
 ---
 
 ## Sommaire
