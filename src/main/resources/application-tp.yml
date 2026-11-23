@@ -11,3 +11,15 @@ spring:
         # Crée une contrainte d'unicité manquante sans supprimer celles qui existent.
         schema_update:
           unique_constraint_strategy: RECREATE_QUIETLY
+
+# Swagger UI : http://localhost:8080/swagger-ui/index.html
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    tags-sorter: alpha
+    operations-sorter: method
+    display-request-duration: true
+    # Le token n'est pas conservé dans le navigateur entre deux rechargements.
+    persist-authorization: false

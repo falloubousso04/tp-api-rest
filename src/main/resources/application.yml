@@ -23,3 +23,10 @@ app:
   jwt:
     secret-base64: ${JWT_SECRET_BASE64}
     ttl-seconds: ${JWT_TTL_SECONDS:900}
+
+# Documentation désactivée par défaut ; elle est activée par le profil tp.
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
