@@ -1,0 +1,33 @@
+package sn.ucak.tpapirest.security;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import sn.ucak.tpapirest.dto.error.ApiError;
+import tools.jackson.databind.ObjectMapper;
+
+/** Écrit une {@link ApiError} JSON depuis la chaîne de filtres Spring Security. */
+@Component
+public class ApiErrorWriter {
+
+    private final ObjectMapper objectMapper;
+
+    public ApiErrorWriter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public void write(HttpServletRequest request, HttpServletResponse response, HttpStatus status, String message)
+            throws IOException {
+        response.setStatus(status.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        objectMapper.writeValue(response.getOutputStream(),
+                ApiError.of(status.value(), message, request.getRequestURI()));
+    }
+}
